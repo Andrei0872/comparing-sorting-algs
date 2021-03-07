@@ -1,0 +1,3 @@
+package algs
+
+func StoogeSort() {}
