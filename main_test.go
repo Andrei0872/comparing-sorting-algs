@@ -71,4 +71,17 @@ var tableTests = []struct {
 	{int(N), int(N) - 1, genArrayWithIdenticalElements(N, 1), fmt.Sprintf("TOTAL = %d, MAX = %d\n", int(N), 1), fmt.Sprintf("Array with identical elements %d\n", 1)},
 }
 
+func BenchmarkBubble(t *testing.B) {
+	for _, test := range tableTests {
+		t.Run(fmt.Sprintf("%s; %s", test.description, test.title), func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				isSorted := sort.IntsAreSorted(algs.BubbleSort(test.list))
+				if !isSorted {
+					b.Errorf("The current algorithm did not properly sorted the elements!")
+				}
+			}
+		})
+	}
+
+	fmt.Println()
 }
