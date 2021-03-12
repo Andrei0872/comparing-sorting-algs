@@ -57,7 +57,7 @@ go test --bench='(?i)gnome|heap'
 Because the `Stooge Sort` algorithm is **extremely** slow, I'd recommend you run the benchmarks for all the algorithms except this one. You can do so with the following command:
 
 ```bash
-go test --bench='(?i)bubble|gnome|heap|count'
+go test --bench='(?i)bubble|gnome|heap|count|native'
 ```
 
 ### Sample results
@@ -65,7 +65,7 @@ go test --bench='(?i)bubble|gnome|heap|count'
 After running
 
 ```bash
-go test --bench='(?i)bubble|gnome|heap|count'
+go test --bench='(?i)bubble|gnome|heap|count|native'
 ```
 
 on my machine, I got the following results:
@@ -74,44 +74,53 @@ on my machine, I got the following results:
 goos: linux
 goarch: amd64
 pkg: github.com/comparing_sorting_algorithms
-BenchmarkBubbleSort/Permutations_of_1000_;_TOTAL_=_1000,_MAX_=_999_-8         	            308304	      3507 ns/op
-BenchmarkBubbleSort/Permutations_of_10000_;_TOTAL_=_10000,_MAX_=_9999_-8      	             35311	     33358 ns/op
-BenchmarkBubbleSort/ASC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8  	            348283	      3421 ns/op
-BenchmarkBubbleSort/ASC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8         	   34801	     33768 ns/op
-BenchmarkBubbleSort/DESC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8           	  307598	      3432 ns/op
-BenchmarkBubbleSort/DESC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8        	   33542	     33567 ns/op
-BenchmarkBubbleSort/Array_with_identical_elements:1_;_TOTAL_=_1000,_MAX_=_1_-8          	  321922	      3406 ns/op
-BenchmarkBubbleSort/Array_with_identical_elements_1_;_TOTAL_=_10000,_MAX_=_1_-8         	   34862	     35161 ns/op
+BenchmarkBubbleSort/Permutations_of_1000_;_TOTAL_=_1000,_MAX_=_999_-8         	            336240	      3682 ns/op
+BenchmarkBubbleSort/Permutations_of_10000_;_TOTAL_=_10000,_MAX_=_9999_-8      	             32919	     37025 ns/op
+BenchmarkBubbleSort/ASC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8  	            309852	      3634 ns/op
+BenchmarkBubbleSort/ASC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8         	   32521	     34923 ns/op
+BenchmarkBubbleSort/DESC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8           	  289390	      3524 ns/op
+BenchmarkBubbleSort/DESC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8        	   33108	     34188 ns/op
+BenchmarkBubbleSort/Array_with_identical_elements:1_;_TOTAL_=_1000,_MAX_=_1_-8          	  325699	      3568 ns/op
+BenchmarkBubbleSort/Array_with_identical_elements_1_;_TOTAL_=_10000,_MAX_=_1_-8         	   32696	     35299 ns/op
 
-BenchmarkCountSort/Permutations_of_1000_;_TOTAL_=_1000,_MAX_=_999_-8                    	   43562	     28852 ns/op
-BenchmarkCountSort/Permutations_of_10000_;_TOTAL_=_10000,_MAX_=_9999_-8                 	    8587	    175322 ns/op
-BenchmarkCountSort/ASC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8             	   39712	     31856 ns/op
-BenchmarkCountSort/ASC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8          	    7617	    164478 ns/op
-BenchmarkCountSort/DESC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8            	   39574	     29272 ns/op
-BenchmarkCountSort/DESC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8         	    7248	    171165 ns/op
-BenchmarkCountSort/Array_with_identical_elements:1_;_TOTAL_=_1000,_MAX_=_1_-8           	   42853	     29379 ns/op
-BenchmarkCountSort/Array_with_identical_elements_1_;_TOTAL_=_10000,_MAX_=_1_-8          	    7404	    156185 ns/op
+BenchmarkCountSort/Permutations_of_1000_;_TOTAL_=_1000,_MAX_=_999_-8                    	   44132	     28481 ns/op
+BenchmarkCountSort/Permutations_of_10000_;_TOTAL_=_10000,_MAX_=_9999_-8                 	    8372	    169169 ns/op
+BenchmarkCountSort/ASC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8             	   39830	     31804 ns/op
+BenchmarkCountSort/ASC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8          	    7312	    176724 ns/op
+BenchmarkCountSort/DESC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8            	   39724	     31132 ns/op
+BenchmarkCountSort/DESC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8         	    6600	    178965 ns/op
+BenchmarkCountSort/Array_with_identical_elements:1_;_TOTAL_=_1000,_MAX_=_1_-8           	   43245	     29294 ns/op
+BenchmarkCountSort/Array_with_identical_elements_1_;_TOTAL_=_10000,_MAX_=_1_-8          	    7166	    164025 ns/op
 
-BenchmarkHeapSort/Permutations_of_1000_;_TOTAL_=_1000,_MAX_=_999_-8                     	   17520	     66407 ns/op
-BenchmarkHeapSort/Permutations_of_10000_;_TOTAL_=_10000,_MAX_=_9999_-8                  	    1318	    843976 ns/op
-BenchmarkHeapSort/ASC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8              	   16815	     67152 ns/op
-BenchmarkHeapSort/ASC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8           	    1344	    841160 ns/op
-BenchmarkHeapSort/DESC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8             	   16567	     69668 ns/op
-BenchmarkHeapSort/DESC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8          	    1404	    880674 ns/op
-BenchmarkHeapSort/Array_with_identical_elements:1_;_TOTAL_=_1000,_MAX_=_1_-8            	  128612	      9611 ns/op
-BenchmarkHeapSort/Array_with_identical_elements_1_;_TOTAL_=_10000,_MAX_=_1_-8           	   13208	     87779 ns/op
+BenchmarkHeapSort/Permutations_of_1000_;_TOTAL_=_1000,_MAX_=_999_-8                     	   17745	     66997 ns/op
+BenchmarkHeapSort/Permutations_of_10000_;_TOTAL_=_10000,_MAX_=_9999_-8                  	    1368	    827720 ns/op
+BenchmarkHeapSort/ASC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8              	   16636	     67112 ns/op
+BenchmarkHeapSort/ASC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8           	    1390	    804317 ns/op
+BenchmarkHeapSort/DESC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8             	   18225	     65635 ns/op
+BenchmarkHeapSort/DESC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8          	    1398	    801088 ns/op
+BenchmarkHeapSort/Array_with_identical_elements:1_;_TOTAL_=_1000,_MAX_=_1_-8            	  126187	      9371 ns/op
+BenchmarkHeapSort/Array_with_identical_elements_1_;_TOTAL_=_10000,_MAX_=_1_-8           	   12574	     90953 ns/op
 
-BenchmarkGnomeSort/Permutations_of_1000_;_TOTAL_=_1000,_MAX_=_999_-8                    	  321060	      3668 ns/op
-BenchmarkGnomeSort/Permutations_of_10000_;_TOTAL_=_10000,_MAX_=_9999_-8                 	   30144	     36674 ns/op
-BenchmarkGnomeSort/ASC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8             	  289006	      3757 ns/op
-BenchmarkGnomeSort/ASC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8          	   32208	     36656 ns/op
-BenchmarkGnomeSort/DESC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8            	  296413	      3707 ns/op
-BenchmarkGnomeSort/DESC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8         	   32053	     36548 ns/op
-BenchmarkGnomeSort/Array_with_identical_elements:1_;_TOTAL_=_1000,_MAX_=_1_-8           	  316794	      3678 ns/op
-BenchmarkGnomeSort/Array_with_identical_elements_1_;_TOTAL_=_10000,_MAX_=_1_-8          	   31980	     36447 ns/op
+BenchmarkGnomeSort/Permutations_of_1000_;_TOTAL_=_1000,_MAX_=_999_-8                    	  315808	      3717 ns/op
+BenchmarkGnomeSort/Permutations_of_10000_;_TOTAL_=_10000,_MAX_=_9999_-8                 	   31620	     36664 ns/op
+BenchmarkGnomeSort/ASC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8             	  320732	      3688 ns/op
+BenchmarkGnomeSort/ASC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8          	   29839	     38849 ns/op
+BenchmarkGnomeSort/DESC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8            	  296325	      4398 ns/op
+BenchmarkGnomeSort/DESC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8         	   29257	     37843 ns/op
+BenchmarkGnomeSort/Array_with_identical_elements:1_;_TOTAL_=_1000,_MAX_=_1_-8           	  303585	      3667 ns/op
+BenchmarkGnomeSort/Array_with_identical_elements_1_;_TOTAL_=_10000,_MAX_=_1_-8          	   32768	     36711 ns/op
+
+BenchmarkNativeSort/Permutations_of_1000_;_TOTAL_=_1000,_MAX_=_999_-8                   	   30529	     35769 ns/op
+BenchmarkNativeSort/Permutations_of_10000_;_TOTAL_=_10000,_MAX_=_9999_-8                	    2275	    580263 ns/op
+BenchmarkNativeSort/ASC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8            	   29115	     42563 ns/op
+BenchmarkNativeSort/ASC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8         	    2318	    533351 ns/op
+BenchmarkNativeSort/DESC_Range_of_1000_elements_;_TOTAL_=_1000,_MAX_=_1000_-8           	   33187	     35630 ns/op
+BenchmarkNativeSort/DESC_Range_of_10000_elements_;_TOTAL_=_10000,_MAX_=_10000_-8        	    2536	    474735 ns/op
+BenchmarkNativeSort/Array_with_identical_elements:1_;_TOTAL_=_1000,_MAX_=_1_-8          	  124982	      9980 ns/op
+BenchmarkNativeSort/Array_with_identical_elements_1_;_TOTAL_=_10000,_MAX_=_1_-8         	   12296	     94886 ns/op
 
 PASS
-ok  	github.com/comparing_sorting_algorithms	48.219s
+ok  	github.com/comparing_sorting_algorithms	59.602s
 ```
 
 *Note*: the second column indicates how many times the function was run within a second(by default). You can find more details [here](https://dave.cheney.net/2013/06/30/how-to-write-benchmarks-in-go).
