@@ -12,6 +12,7 @@ TODO:
 * [Count Sort](./algs/count.go)
 * [Heap Sort](./algs/heap.go)
 * [Gnome Sort](./algs/gnome.go)
+* [Stooge Sort](./algs/stooge.go)
 
 ---
 
