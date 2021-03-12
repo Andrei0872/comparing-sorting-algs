@@ -130,3 +130,19 @@ func BenchmarkGnomeSort(t *testing.B) {
 
 	fmt.Println()
 }
+
+// WARNING: this is **extremely** slow
+func BenchmarkStoogeSort(t *testing.B) {
+	for _, test := range tableTests {
+		t.Run(fmt.Sprintf("%s; %s", test.description, test.title), func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				isSorted := sort.IntsAreSorted(algs.StoogeSort(test.list))
+				if !isSorted {
+					b.Errorf("The current algorithm did not properly sorted the elements!")
+				}
+			}
+		})
+	}
+
+	fmt.Println()
+}
