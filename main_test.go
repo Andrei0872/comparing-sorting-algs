@@ -146,3 +146,19 @@ func BenchmarkStoogeSort(t *testing.B) {
 
 	fmt.Println()
 }
+
+func BenchmarkNativeSort(t *testing.B) {
+	for _, test := range tableTests {
+		t.Run(fmt.Sprintf("%s; %s", test.description, test.title), func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				sort.Ints(test.list)
+				isSorted := sort.IntsAreSorted(test.list)
+				if !isSorted {
+					b.Errorf("The current algorithm did not properly sorted the elements!")
+				}
+			}
+		})
+	}
+
+	fmt.Println()
+}
